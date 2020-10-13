@@ -6,6 +6,7 @@
     <title>Dalang Random Name Picker</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
 
     <link rel="stylesheet" href="style/style.css">
 </head>
@@ -37,22 +38,122 @@
     </div>
 
     <script>
-        var nameArray = ['dalang', 'dalang one', 'dalang two'];
+        var newValue = [
+            {
+                name: 'dalang',
+                email: 'https://www.google.com'
+            },
+            {
+                name: 'dalang_one',
+                email: 'https://www.google.com'
+            },
+            {
+                name: 'dalang_two',
+                email: 'https://www.google.com'
+            }
+        ];
 
         $("#pick").click(function() {
+            removePlaceholder();
+            clearFinalName();//clear random name
+            let selectedIndex = 0;
+            dInteval = setInterval(function() {
+                let index = Math.floor(Math.random() * (newValue.length-1));
+                if(newValue[index] !== undefined){
+                    selectedIndex = index;
+                    addName(newValue[index].name);
+                }
+            }, 100);
+            setTimeout(() => {
+                clearInterval(dInteval);
+                //showFinalName()
 
-            // Get a random name, the winner
-            var winner = nameArray[Math.floor(Math.random()*nameArray.length)];
+                var winner = newValue[selectedIndex].name;
+                showFinalName(winner);
+                winner = "🎉" + " " + winner + " " + "🎉";
 
-            winner = "🎉" + " " + winner + " " + "🎉";
-
-            // Display winner
-            $("#world").addClass("open");
-            $("#winner").addClass("open");
-            $("#close").addClass("open");
-            $("#winner").text(winner);
+                // Display winner
+                $("#world").addClass("open");
+                $("#winner").addClass("open");
+                $("#close").addClass("open");
+                $("#winner").text(winner);
+                $("#winner").attr("href", newValue[selectedIndex].email);
+            }, 3000);
         });
 
+        function removePlaceholder(){
+            var container = document.querySelector(".random-name-container");
+            let finalNameText = document.querySelector(".placeholder");
+            if(finalNameText !== null){
+                container.removeChild(finalNameText);
+            }
+        }
+        function clearFinalName(){
+            var container = document.querySelector(".random-name-container");
+            let finalNameText = document.querySelector(".final-name");
+            if(finalNameText !== null){
+                container.removeChild(finalNameText);
+            }
+        }
+
+        function showFinalName(name){
+            var container = document.querySelector(".random-name-container");
+            var para = document.createElement("h1");
+            para.classList.add('final-name');
+            var node = document.createTextNode(name);
+            para.appendChild(node);
+
+            container.appendChild(para);
+            // gsap.from(para, {
+            //     scale: 1,
+            // });
+            // gsap.to(para, {
+            //     duration: 1,
+            //     scale: 3,
+            //     ease: "bounce.out",
+            // });
+        }
+        function addName(name){
+            var container = document.querySelector(".random-name-container");
+
+            var para = document.createElement("p");
+            para.classList.add('name');
+            var node = document.createTextNode(name);
+            para.appendChild(node);
+
+            container.appendChild(para);
+
+            let rotation =  Math.floor(Math.random() * 360)+1;
+            let directionY = Math.floor(Math.random() * (200 - (-200)) + (-200));
+            let directionX = Math.floor(Math.random() * (200 - (-200)) + (-200));
+
+            gsap.from(para, {
+                opacity: 1, 
+                x: 0,
+                rotation: 0,
+                scale: 1,
+            });
+            gsap.to(para, {
+                duration: 1,
+                x: directionX,
+                y: directionY,
+                scale: 2,
+                opacity:0,
+                rotation: rotation,
+                ease: "power2.out",
+                onComplete: removeElement,
+                onCompleteParams: [container, para]
+            });
+        }
+        function removeElement(container, text){
+            container.removeChild(text)
+        }
+
+        $(".overlay").click(function() {
+            $("#world").removeClass("open");
+            $("#winner").removeClass("open");
+            $("#close").removeClass("open");
+        });
         $("#close").click(function() {
             $("#world").removeClass("open");
             $("#winner").removeClass("open");
