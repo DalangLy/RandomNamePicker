@@ -99,7 +99,7 @@ html {
   padding-top: 38px;
 }
 
-.background nav .navWrapper a {
+.background nav .navWrapper p {
   text-decoration: none;
   color: white;
   font-size: 24px;
@@ -162,7 +162,7 @@ header .namepicker .random-name-container .name {
   font-size: 14px;
 }
 
-header .namepicker a {
+header .namepicker button {
   color: white;
   font-size: 24px;
   font-weight: 700;
@@ -177,6 +177,9 @@ header .namepicker a {
   display: block;
   margin: auto;
   visibility: hidden;
+  border: none;
+  cursor: pointer;
+  outline: none;
 }
 
 @-webkit-keyframes fadeIn {

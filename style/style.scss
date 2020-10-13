@@ -80,7 +80,7 @@ html {
             width: 85%;
             margin: auto;
             padding-top: 38px;
-            a {
+            p {
                 text-decoration: none;
                 color: white;
                 font-size: 24px;
@@ -124,7 +124,7 @@ header {
                 font-size: 14px;
             }
         }
-        a {
+        button {
             color: white;
             font-size: 24px;
             font-weight: 700;
@@ -137,6 +137,9 @@ header {
             display: block;
             margin: auto;
             visibility: hidden;
+            border: none;
+            cursor: pointer;
+            outline: none;
         }
     }
     @keyframes fadeIn {
