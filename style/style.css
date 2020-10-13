@@ -176,6 +176,7 @@ header .namepicker a {
   border-radius: 1000px;
   display: block;
   margin: auto;
+  visibility: hidden;
 }
 
 @-webkit-keyframes fadeIn {

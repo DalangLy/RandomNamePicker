@@ -37,48 +37,92 @@
 
     </div>
 
+    <!-- Firebase Tasks -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
     <script>
-        var newValue = [
-            {
-                name: 'dalang',
-                email: 'https://www.google.com'
-            },
-            {
-                name: 'dalang_one',
-                email: 'https://www.google.com'
-            },
-            {
-                name: 'dalang_two',
-                email: 'https://www.google.com'
-            }
-        ];
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyB6LMS0SbGS-tvTW4BLloaSKuMyoZwEKJw",
+            authDomain: "dsys-721ca.firebaseapp.com",
+            databaseURL: "https://dsys-721ca.firebaseio.com",
+            projectId: "dsys-721ca",
+            storageBucket: "dsys-721ca.appspot.com",
+            messagingSenderId: "79512194642",
+            appId: "1:79512194642:web:a797be3d102cfa7eb1998b",
+            measurementId: "G-ZTL9EQRPZ1"
+        };
+
+        firebase.initializeApp(config);
+        firebase.analytics();
+        var database = firebase.database();
+        var newValue = [];
+        //get data
+        firebase.database().ref('Users').on('value', function (snapshot) {
+            newValue = snapshot.val();
+            console.log(newValue);
+
+            document.querySelector('#pick').style.visibility = "visible";
+        });
+
 
         $("#pick").click(function() {
             removePlaceholder();
             clearFinalName();//clear random name
             let selectedIndex = 0;
-            dInteval = setInterval(function() {
-                let index = Math.floor(Math.random() * (newValue.length-1));
-                if(newValue[index] !== undefined){
-                    selectedIndex = index;
-                    addName(newValue[index].name);
-                }
-            }, 100);
-            setTimeout(() => {
-                clearInterval(dInteval);
-                //showFinalName()
 
-                var winner = newValue[selectedIndex].name;
-                showFinalName(winner);
-                winner = "🎉" + " " + winner + " " + "🎉";
+            
+            let filteredValue = newValue.filter(item => {return item.winner == false});//filter only winner
+            if(filteredValue.length > 0){
+                document.querySelector('#pick').style.visibility = "hidden";
+                let arrayIndex = [];
+                newValue.forEach(element => {
+                    if(!element.winner){
+                        arrayIndex.push(newValue.indexOf(element))
+                    }
+                });
+                dInteval = setInterval(function() {
+                    let index = Math.floor(Math.random() * (arrayIndex.length-1));
+                    if(newValue[arrayIndex[index]] !== undefined){
+                        selectedIndex = arrayIndex[index];
+                        addName(newValue[arrayIndex[index]].name);
+                    }
+                }, 100);
+                setTimeout(() => {
+                    clearInterval(dInteval);
 
-                // Display winner
-                $("#world").addClass("open");
-                $("#winner").addClass("open");
-                $("#close").addClass("open");
-                $("#winner").text(winner);
-                $("#winner").attr("href", newValue[selectedIndex].email);
-            }, 3000);
+                    //display winner name
+                    var winner = newValue[selectedIndex].name;
+                    showFinalName(winner);
+                    winner = "🎉" + " " + winner + " " + "🎉";
+
+                    // Display winner
+                    $("#world").addClass("open");
+                    $("#winner").addClass("open");
+                    $("#close").addClass("open");
+                    $("#winner").text(winner);
+                    $("#winner").attr("href", newValue[selectedIndex].email);
+
+                    //update winner
+                    var postData = {
+                        name: newValue[selectedIndex].name,
+                        email: newValue[selectedIndex].email,
+                        winner: true,
+                    };
+                    var updates = {};
+                    updates['/Users/' + selectedIndex] = postData;
+                    firebase.database().ref().update(updates);
+
+                    document.querySelector('#pick').disabled = false;
+                }, 3000);
+            }
+            else{
+                console.log("No Winner")
+            }
         });
 
         function removePlaceholder(){
@@ -104,14 +148,14 @@
             para.appendChild(node);
 
             container.appendChild(para);
-            // gsap.from(para, {
-            //     scale: 1,
-            // });
-            // gsap.to(para, {
-            //     duration: 1,
-            //     scale: 3,
-            //     ease: "bounce.out",
-            // });
+            gsap.from(para, {
+                scale: 1,
+            });
+            gsap.to(para, {
+                duration: 1,
+                scale: 2,
+                ease: "bounce.out",
+            });
         }
         function addName(name){
             var container = document.querySelector(".random-name-container");
