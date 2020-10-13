@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-family: "Roboto";
+}
+
+.background {
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#FF8B57), to(#FB5656));
+  background: linear-gradient(to bottom right, #FF8B57, #FB5656);
+}
+
+.background nav {
+  width: 100%;
+  height: 100px;
+}
+
+.background nav .navWrapper {
+  width: 85%;
+  margin: auto;
+  padding-top: 38px;
+}
+
+.background nav .navWrapper a {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  display: block;
+  text-align: center;
+}
+
+header {
+  width: 100%;
+  height: calc(100% - 100px);
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header .namepicker {
+  padding: 50px 35px 50px 35px;
+  background-color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  display: block;
+  -webkit-animation: fadeIn 0.75s forwards 0s ease;
+          animation: fadeIn 0.75s forwards 0s ease;
+}
+
+header .namepicker .random-name-container {
+  width: 100%;
+  height: 500px;
+  margin: 20px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header .namepicker .random-name-container .placeholder {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+header .namepicker .random-name-container .name {
+  position: absolute;
+  font-size: 14px;
+}
+
+header .namepicker a {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  padding: 21px 161px;
+  background: -webkit-gradient(linear, left top, right top, from(#FF8757), to(#FC5F56));
+  background: linear-gradient(to right, #FF8757, #FC5F56);
+  -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 1000px;
+  display: block;
+  margin: auto;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    -webkit-transform: skewY(25deg);
+            transform: skewY(25deg);
+    opacity: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform: skewY(0deg);
+            transform: skewY(0deg);
+    opacity: 1;
+    -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    -webkit-transform: skewY(25deg);
+            transform: skewY(25deg);
+    opacity: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform: skewY(0deg);
+            transform: skewY(0deg);
+    opacity: 1;
+    -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+/*# sourceMappingURL=style.css.map */
